@@ -1,0 +1,92 @@
+class CircularNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last = None
+
+    # =========================
+    # INSERT
+    # =========================
+    def insert(self, value):
+
+        newNode = CircularNode(value)
+
+        # LIST KOSONG
+        if self.last is None:
+            self.last = newNode
+            newNode.next = newNode
+            return
+
+        # INSERT DEPAN
+        newNode.next = self.last.next
+        self.last.next = newNode
+
+    # =========================
+    # INSERT BELAKANG
+    # =========================
+    def insertLast(self, value):
+
+        self.insert(value)
+        self.last = self.last.next
+
+    # =========================
+    # TRAVERSAL
+    # =========================
+    def traverse(self):
+
+        if self.last is None:
+            return
+
+        current = self.last.next
+
+        while True:
+
+            print(current.data, end=" -> ")
+
+            current = current.next
+
+            if current == self.last.next:
+                break
+
+        print("(BACK TO START)")
+
+    # =========================
+    # SEARCH
+    # =========================
+    def search(self, target):
+
+        if self.last is None:
+            return False
+
+        current = self.last.next
+
+        while True:
+
+            if current.data == target:
+                return True
+
+            current = current.next
+
+            if current == self.last.next:
+                break
+
+        return False
+
+
+# =========================
+# TEST CLL
+# =========================
+cll = CircularLinkedList()
+
+cll.insertLast(10)
+cll.insertLast(20)
+cll.insertLast(30)
+cll.insertLast(40)
+
+cll.traverse()
+
+print("SEARCH 20:", cll.search(20))
